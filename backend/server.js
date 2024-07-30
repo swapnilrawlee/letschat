@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
@@ -25,6 +26,6 @@ app.get('/', (req, res) => {
     return res.send('Hello from the server');
 });
 
-server.listen(3030, () => {
+server.listen(process.env.PORT, () => {
     console.log('Server is running on port 3030');
 });
