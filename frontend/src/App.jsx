@@ -8,7 +8,7 @@ const App = () => {
   const [username, setUsername] = useState(""); 
 
   useEffect(() => {
-    const socket = io("https://6f2d-124-66-175-241.ngrok-free.app");
+    const socket = io('https://6f2d-124-66-175-241.ngrok-free.app');
 
     socket.on("connect", () => {
       console.log("Connected to the server");
