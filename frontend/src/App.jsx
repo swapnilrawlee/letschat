@@ -5,10 +5,10 @@ const App = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [username, setUsername] = useState("User1"); // Default username
+  const [username, setUsername] = useState(""); 
 
   useEffect(() => {
-    const socket = io("http://localhost:3030");
+    const socket = io(" https://6f2d-124-66-175-241.ngrok-free.app ");
     setSocket(socket);
 
     socket.on("connect_error", (err) => {
@@ -25,6 +25,13 @@ const App = () => {
   }, []);
 
   const sendMessage = () => {
+
+    //check username 
+    if(username==="" )return alert("Please enter a username ....");
+    
+    // check message
+    if(message==="" )return alert("Please enter a message ....");
+
     if (message.trim() && socket) {
       socket.emit("message", { text: message, sender: username });
       setMessage('');
@@ -42,7 +49,7 @@ const App = () => {
               className={`flex ${msg.sender === username ? "justify-end" : "justify-start"} mb-2`}
             >
               <div
-                className={`p-2 rounded-lg max-w-xs ${msg.sender === username ? "bg-blue-500 text-white" : "bg-green-300 text-black"}`}
+                className={`p-2 rounded-lg max-w-xs ${msg.sender === username ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}
               >
                 <strong>{msg.sender}:</strong> <span>{msg.text}</span>
               </div>
