@@ -13,7 +13,7 @@ const io = socketio(server);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
     credentials: true
 }));
 app.use(helmet()); // Adds security headers
