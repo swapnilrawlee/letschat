@@ -9,16 +9,23 @@ const App = () => {
 
   useEffect(() => {
     const socket = io("https://6f2d-124-66-175-241.ngrok-free.app");
-    setSocket(socket);
 
+    socket.on("connect", () => {
+      console.log("Connected to the server");
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("Disconnected from the server");
+    });
+  
     socket.on("connect_error", (err) => {
       console.error("Connection Error:", err);
     });
-
-    socket.on("message", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
+  
+    socket.on("error", (error) => {
+      console.error("Socket Error:", error);
     });
-
+  
     return () => {
       socket.disconnect();
     };

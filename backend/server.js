@@ -2,20 +2,23 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const cors = require('cors');
+const helmet = require('helmet');
+require('dotenv').config(); // For environment variables
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(
-    {
-        origin: 'https://lets-chat-eight-plum.vercel.app',
-        credentials: true
-    }
-));
+app.use(cors({
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+    credentials: true
+}));
+app.use(helmet()); // Adds security headers
 
+// Socket.io connection
 io.on('connection', (socket) => {
     console.log('A user connected');
 
@@ -29,10 +32,13 @@ io.on('connection', (socket) => {
     });
 });
 
+// Routes
 app.get('/', (req, res) => {
-    return res.send('Hello from the server');
+    res.send('Hello from the server');
 });
 
-server.listen(3030, () => {
-    console.log('Server is running on port 3030');
+// Start server
+const PORT = process.env.PORT || 3030;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
