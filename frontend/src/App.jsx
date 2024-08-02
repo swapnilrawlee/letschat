@@ -5,8 +5,7 @@ import Homepage from '../page/Homepage'
 const App = () => {
   return (
     <div>
-<Homepage/>
-{/* <Routing/> */}
+<Routing/>
     </div>
   )
 }

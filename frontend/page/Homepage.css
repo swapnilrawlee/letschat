@@ -1,0 +1,114 @@
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    background-color: #f7f7f7;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1024px;
+    height: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message.received {
+    justify-content: flex-start;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-text {
+    padding: 8px;
+    max-width: 300px;
+    border-radius: 8px;
+}
+
+.sent-text {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.received-text {
+    background-color: #d4edda;
+    color: #000;
+}
+
+.timestamp {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.input-section {
+    border-top: 1px solid #ddd;
+    padding: 16px;
+    background-color: #f1f1f1;
+}
+
+.username-label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.username-input {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    margin-left: 8px;
+    width: 100%;
+}
+
+.input-controls {
+    display: flex;
+}
+
+.message-input {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.send-button {
+    margin-left: 8px;
+    padding: 8px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
