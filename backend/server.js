@@ -67,8 +67,7 @@ app.post("/api/register", (req, res) => {
 });
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
-    console.log(email);
-    console.log(password);
+
 
   // Check if all fields are present
   if (!email || !password)
@@ -90,7 +89,7 @@ app.post("/api/login", (req, res) => {
     if (!isMatch) return res.status(400).send("Invalid email or password");
 
     // Authentication successful
-    res.status(200).send("Login successful");
+    res.status(200).json(user);
   });
 });
 

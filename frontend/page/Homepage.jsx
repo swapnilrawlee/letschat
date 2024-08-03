@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Homepage.css'; // Make sure to create this CSS file
+import { UserContext } from '../src/utils/context';
 
 const Homepage = () => {
+    const {data} = useContext(UserContext)
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(data.Name);
 
+   
+    
     useEffect(() => {
         const socket = io("http://localhost:3030");
         setSocket(socket);
@@ -25,9 +29,6 @@ const Homepage = () => {
     }, []);
 
     const sendMessage = () => {
-        //check username
-        if (username === "") return alert("Please enter a username ....");
-
         // check message
         if (message === "") return alert("Please enter a message ....");
 
@@ -68,14 +69,8 @@ const Homepage = () => {
                     ))}
                 </div>
                 <div className="input-section">
-                    <label className="username-label">
-                        Username:
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className="username-input"
-                        />
+                    <label className="username-label ">
+                        Username: {username}
                     </label>
                     <div className="input-controls">
                         <input
