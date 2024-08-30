@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import {Route,Routes} from 'react-router-dom'
 import Regsiter from '../src/auth/Regsiter'
 import Login from '../src/auth/Login'
-import Homepage from '../page/Homepage'
 import { UserContext } from '../src/utils/context'
+import Homepage from '../src/page/Homepage'
 const Routing = () => {
   const [data, setData] = useState("");
   return (

@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require("express");
 const http = require("http");
@@ -5,19 +6,22 @@ const socketio = require("socket.io");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const mysql = require("mysql2");
+const jwt = require("jsonwebtoken");
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-// MySQL connection setup
-const db = mysql.createConnection({
+// MySQL connection pooling setup
+const pool = mysql.createPool({
+  connectionLimit: 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
 
-db.connect((err) => {
+pool.getConnection((err) => {
   if (err) {
     console.error("Error connecting to MySQL:", err);
     process.exit(1);
@@ -35,6 +39,16 @@ app.use(
   })
 );
 
+// JWT secret key
+const JWT_SECRET = process.env.JWT_SECRET 
+;
+
+// Helper function to generate JWT
+const generateToken = (user) => {
+  return jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
+};
+
+// Routes
 app.get("/data", (req, res) => {
   res.send("hello from server");
 });
@@ -42,20 +56,16 @@ app.get("/data", (req, res) => {
 app.post("/api/register", (req, res) => {
   const { email, name, password } = req.body;
 
-  // Check if all fields are present
   if (!email || !name || !password)
     return res.status(400).send("Please enter all fields");
 
-  // Check if user already exists
-  db.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
+  pool.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
     if (err) return res.status(500).send("Server error");
     if (results.length > 0) return res.status(400).send("User already exists");
 
-    // Hash password
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    // Create user
-    db.query(
+    pool.query(
       "INSERT INTO users (email, name, password) VALUES (?, ?, ?)",
       [email, name, hashedPassword],
       (err) => {
@@ -65,33 +75,32 @@ app.post("/api/register", (req, res) => {
     );
   });
 });
+
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
-
-  // Check if all fields are present
   if (!email || !password)
     return res.status(400).send("Please enter all fields");
 
-  // Check if user exists
-  db.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
+  pool.query("SELECT * FROM users WHERE email = ?", [email], (err, results) => {
     if (err) return res.status(500).send("Server error");
-    
-    // If no user found
     if (results.length === 0)
         return res.status(400).send("Invalid email or password");
-    
+
     const user = results[0];
-    
-    // Compare password
     const isMatch = bcrypt.compareSync(password, user.Password);
 
     if (!isMatch) return res.status(400).send("Invalid email or password");
 
-    // Authentication successful
-    res.status(200).json(user);
+    // // Generate JWT
+    // const token = generateToken({ id: user.id, email: user.email });
+    // console.log(token);
+    
+    // res.status(200).json({ token });
+    res.status(200).send({ user});
   });
 });
+
 
 // Socket.io connection
 io.on("connection", (socket) => {
