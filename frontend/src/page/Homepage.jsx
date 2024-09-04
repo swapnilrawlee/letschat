@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./Homepage.css"; // Make sure to create this CSS file
+import "./Homepage.css";
 import { UserContext } from "../utils/context";
 import axios from "axios";
 import { io } from 'socket.io-client';
@@ -49,7 +49,7 @@ const Homepage = () => {
   return (
     <div className="container ">
       <div className="flex justify-between items-center w-[80%] mb-6 ">
-        <h1 className="header">Chit-Chat</h1>
+        <h1 className="header">ChatConnection</h1>
         <button className="p-2 bg-black text-white rounded-lg" onClick={logouthandler}>Logout</button>
       </div>
       <div className="chat-box">
