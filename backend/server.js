@@ -88,15 +88,13 @@ app.post("/api/login", (req, res) => {
         return res.status(400).send("Invalid email or password");
 
     const user = results[0];
-    const isMatch = bcrypt.compareSync(password, user.Password);
+    const isMatch = bcrypt.compareSync(password, user.password);
 
     if (!isMatch) return res.status(400).send("Invalid email or password");
+// // Generate JWT
+// const token = generateToken({ id: user.id, email: user.email });
+// res.status(200).json({ token });
 
-    // // Generate JWT
-    // const token = generateToken({ id: user.id, email: user.email });
-    // console.log(token);
-    
-    // res.status(200).json({ token });
     res.status(200).send({ user});
   });
 });

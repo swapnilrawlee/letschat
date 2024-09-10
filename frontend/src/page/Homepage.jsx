@@ -12,7 +12,7 @@ const Homepage = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [username, setUsername] = useState(data.user.Name);
+  const [username, setUsername] = useState(data.user.name);
 
   useEffect(() => {
     const socket = io("http://localhost:3030");

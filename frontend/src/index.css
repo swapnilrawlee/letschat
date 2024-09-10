@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.login-link {
+    text-decoration: none;
+    color: #2ecc71; /* Green color */
+    font-weight: 600;
+    font-size: 1.1em;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .login-link .text {
+    margin-right: 5px;
+  }
+  
+  .login-link .highlight {
+    color: #e74c3c; /* Red color for highlight */
+  }
+  
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  .unique-link {
+    text-decoration: none;
+    color: #3498db; /* Blue color */
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  
+  .unique-link:hover {
+    text-decoration: underline;
+  }
+  
+  .highlight {
+    color: #e74c3c; /* Red color for highlight */
+  }
+    
